@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost:5433/news_db
+    username: postgres
+    password: 123
+    hikari:
+      schema: news_portal_schema
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS news_portal_schema
+      connection-timeout: 10000
