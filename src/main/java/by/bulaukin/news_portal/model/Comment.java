@@ -39,7 +39,7 @@ public class Comment {
     @ToString.Exclude
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "news_id")
     @ToString.Exclude
     private News news;

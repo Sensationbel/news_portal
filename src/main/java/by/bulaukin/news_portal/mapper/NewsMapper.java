@@ -1,9 +1,9 @@
 package by.bulaukin.news_portal.mapper;
 
 import by.bulaukin.news_portal.model.News;
+import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
 import by.bulaukin.news_portal.web.model.response.NewsListResponse;
 import by.bulaukin.news_portal.web.model.response.NewsResponse;
-import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,8 +17,8 @@ public interface NewsMapper {
 
     News requestToNews(UpsertNewsRequest request);
 
-    @Mapping(source = "newsId", target = "id")
-    News requestToNews(Long newsId, UpsertNewsRequest request);
+    @Mapping(source = "contentId", target = "id")
+    News requestToNews(Long contentId, UpsertNewsRequest request);
 
     NewsResponse newsToResponse(News news);
 

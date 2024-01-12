@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class UserResponse {
 
+    private Long userId;
     private String username;
     private String email;
     private List<NewsResponse> newsList = new ArrayList<>();

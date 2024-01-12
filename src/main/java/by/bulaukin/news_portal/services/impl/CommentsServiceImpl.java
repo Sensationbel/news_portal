@@ -5,6 +5,7 @@ import by.bulaukin.news_portal.model.Comment;
 import by.bulaukin.news_portal.repository.CommentsRepository;
 import by.bulaukin.news_portal.repository.specification.CommentsSpecification;
 import by.bulaukin.news_portal.services.CommentsService;
+import by.bulaukin.news_portal.services.users_check.UsersCheckerComment;
 import by.bulaukin.news_portal.web.model.filter.CommentsFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -43,6 +44,7 @@ public class CommentsServiceImpl implements CommentsService {
 
     @SneakyThrows
     @Override
+    @UsersCheckerComment
     public Comment update(Comment comment) {
         Comment exsistComment = findById(comment.getId());
 
@@ -51,6 +53,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
+    @UsersCheckerComment
     public void deleteById(Long id) {
         commentsRepository.deleteById(id);
     }

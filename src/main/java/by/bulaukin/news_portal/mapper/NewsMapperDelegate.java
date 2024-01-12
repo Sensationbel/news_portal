@@ -6,8 +6,8 @@ import by.bulaukin.news_portal.services.CategoriesService;
 import by.bulaukin.news_portal.services.CommentsService;
 import by.bulaukin.news_portal.services.UsersService;
 import by.bulaukin.news_portal.web.model.filter.CommentsFilter;
-import by.bulaukin.news_portal.web.model.response.NewsResponse;
 import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
+import by.bulaukin.news_portal.web.model.response.NewsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public abstract class NewsMapperDelegate implements NewsMapper{
 
     @Override
     public News requestToNews(UpsertNewsRequest request) {
-        News news = new News();
+        News news = new by.bulaukin.news_portal.model.News();
         news.setNewsText(request.getText());
         news.setUser(userService.findById(request.getUserId()));
         news.setCategory(categoriesService.findCategoryByCode(request.getCodeNews()));
@@ -54,11 +54,16 @@ public abstract class NewsMapperDelegate implements NewsMapper{
         response.setText(news.getNewsText());
         response.setNewsCategory(news.getCategory().getType().name());
         response.setUserId(news.getUser().getId());
+        getComments(news);
+        response.setCommentsCount(getComments(news).size());
+        return response;
+    }
+
+    private List<Comment> getComments(News news) {
         CommentsFilter filter = new CommentsFilter();
         filter.setNewsId(news.getId());
         List<Comment> comments = commentsService.findAllByNewsId(filter);
-        response.getComments().addAll(commentsMapper.commentsListToResponseList(comments));
-        return response;
+        return comments;
     }
 
 //    private List<CommentsResponse>

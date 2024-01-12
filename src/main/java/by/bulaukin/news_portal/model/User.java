@@ -37,7 +37,7 @@ public class User {
     @Builder.Default
     private List<Comment> commentsList = new ArrayList<>();
 //
-//    public void AddNews(News news) {
+//    public void AddNews(UpsertNewsRequest news) {
 //        if(newsList == null) {
 //            newsList = new ArrayList<>();
 //        }

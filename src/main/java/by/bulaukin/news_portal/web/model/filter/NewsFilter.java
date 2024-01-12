@@ -6,4 +6,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NewsFilter extends EntityFilter {
+
+    private Long userId;
+    private Long newsId;
+    private Character newsType;
+
 }

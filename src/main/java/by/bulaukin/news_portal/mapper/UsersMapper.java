@@ -19,6 +19,7 @@ public interface UsersMapper {
     @Mapping(source = "userId", target = "id")
     User requestToUser(Long userId, UpsertUserRequest request);
 
+    @Mapping(source = "id", target = "userId")
     UserResponse userToResponse(User user);
 
     default UsersListResponse usersListToUsersListResponse(List<User> users){

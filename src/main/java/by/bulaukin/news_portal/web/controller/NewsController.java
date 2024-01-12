@@ -3,9 +3,9 @@ package by.bulaukin.news_portal.web.controller;
 import by.bulaukin.news_portal.mapper.NewsMapper;
 import by.bulaukin.news_portal.model.News;
 import by.bulaukin.news_portal.services.NewsService;
+import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
 import by.bulaukin.news_portal.web.model.response.NewsListResponse;
 import by.bulaukin.news_portal.web.model.response.NewsResponse;
-import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
 import by.bulaukin.news_portal.web.model.filter.NewsFilter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class NewsController {
 
     @GetMapping
     public ResponseEntity<NewsListResponse> findAll(@Valid NewsFilter filter) {
-        return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(newsService.findAll(filter)));
+        return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(newsService.findAllWithFilter(filter)));
     }
 
     @GetMapping("/{id}")
@@ -33,22 +33,22 @@ public class NewsController {
 
     @PostMapping
     public ResponseEntity<NewsResponse> create(@RequestBody @Valid UpsertNewsRequest request) {
-        News news = newsService.save(newsMapper.requestToNews(request));
+        by.bulaukin.news_portal.model.News news = newsService.save(newsMapper.requestToNews(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 newsMapper.newsToResponse(news));
 
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<NewsResponse> update(@PathVariable("id") Long newsId,
+    @PutMapping("/update")
+    public ResponseEntity<NewsResponse> update(@RequestParam Long contentId,
                                                @RequestBody @Valid UpsertNewsRequest request) {
-        News existingNews = newsService.update(newsMapper.requestToNews(newsId, request));
+       News existingNews = newsService.update(newsMapper.requestToNews(contentId, request));
         return ResponseEntity.ok(
                 newsMapper.newsToResponse(existingNews));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable("id") Long newsId) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteById(@RequestParam Long newsId) {
         newsService.deleteById(newsId);
         return ResponseEntity.noContent().build();
     }

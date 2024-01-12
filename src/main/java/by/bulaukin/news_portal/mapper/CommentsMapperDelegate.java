@@ -22,4 +22,11 @@ public abstract class CommentsMapperDelegate implements CommentsMapper {
 
         return comment;
     }
+
+    @Override
+    public Comment requestToComment(Long contentId, UpsertCommentRequest request) {
+        Comment existedComment = requestToComment(request);
+        existedComment.setId(contentId);
+        return existedComment;
+    }
 }
