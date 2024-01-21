@@ -1,18 +1,17 @@
-package by.bulaukin.news_portal.services.users_check;
+package by.bulaukin.news_portal.services.users_check_aspect;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-public interface UsersCheckerInterface {
+import java.util.Objects;
 
-    Object checkUsersId(ProceedingJoinPoint point) throws Throwable;
+public interface UsersCheckerInterface {
 
     default HttpServletRequest getHttpServletRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        return ((ServletRequestAttributes) requestAttributes).getRequest();
+        return ((ServletRequestAttributes) Objects.requireNonNull(requestAttributes)).getRequest();
     }
 
     default Long getUserId(HttpServletRequest request) {

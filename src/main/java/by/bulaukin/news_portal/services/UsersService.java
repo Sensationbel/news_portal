@@ -1,13 +1,13 @@
 package by.bulaukin.news_portal.services;
 
 import by.bulaukin.news_portal.model.User;
-import by.bulaukin.news_portal.web.model.filter.UsersFilter;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 
 import java.util.List;
 
 public interface UsersService {
 
-    List<User> findAll(UsersFilter usersFilter);
+    List<User> findAll(EntityFilter usersFilter);
 
     User findById(Long id);
 

@@ -3,7 +3,7 @@ package by.bulaukin.news_portal.web.controller;
 import by.bulaukin.news_portal.mapper.CommentsMapper;
 import by.bulaukin.news_portal.model.Comment;
 import by.bulaukin.news_portal.services.CommentsService;
-import by.bulaukin.news_portal.web.model.filter.CommentsFilter;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 import by.bulaukin.news_portal.web.model.request.UpsertCommentRequest;
 import by.bulaukin.news_portal.web.model.response.CommentsListResponse;
 import by.bulaukin.news_portal.web.model.response.CommentsResponse;
@@ -22,7 +22,7 @@ public class CommentsController {
     private final CommentsMapper commentsMapper;
 
     @GetMapping
-    public ResponseEntity<CommentsListResponse> findAllByNewsId(CommentsFilter filter) {
+    public ResponseEntity<CommentsListResponse> findAllByNewsId(@Valid EntityFilter filter) {
         return ResponseEntity.ok(
                 commentsMapper.commentsListToCommentsListResponse(commentsService.findAllByNewsId(filter))
         );

@@ -5,8 +5,8 @@ import by.bulaukin.news_portal.model.News;
 import by.bulaukin.news_portal.repository.NewsRepository;
 import by.bulaukin.news_portal.repository.specification.NewsSpecification;
 import by.bulaukin.news_portal.services.NewsService;
-import by.bulaukin.news_portal.services.users_check.UsersCheckerNews;
-import by.bulaukin.news_portal.web.model.filter.NewsFilter;
+import by.bulaukin.news_portal.services.users_check_aspect.news_aspect.UsersCheckerNews;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
@@ -23,7 +23,7 @@ public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
 
     @Override
-    public List<News> findAllWithFilter(NewsFilter filter) {
+    public List<News> findAllWithFilter(EntityFilter filter) {
         return newsRepository.findAll(NewsSpecification.withFilter(filter),
                 PageRequest.of(filter.getPageNum(), filter.getPageSize())).getContent();
     }

@@ -5,8 +5,8 @@ import by.bulaukin.news_portal.model.Comment;
 import by.bulaukin.news_portal.repository.CommentsRepository;
 import by.bulaukin.news_portal.repository.specification.CommentsSpecification;
 import by.bulaukin.news_portal.services.CommentsService;
-import by.bulaukin.news_portal.services.users_check.UsersCheckerComment;
-import by.bulaukin.news_portal.web.model.filter.CommentsFilter;
+import by.bulaukin.news_portal.services.users_check_aspect.comment_aspect.UsersCheckerComment;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
@@ -27,7 +27,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<Comment> findAllByNewsId(CommentsFilter filter) {
+    public List<Comment> findAllByNewsId(EntityFilter filter) {
         return commentsRepository.findAll(CommentsSpecification.withFilter(filter));
     }
 

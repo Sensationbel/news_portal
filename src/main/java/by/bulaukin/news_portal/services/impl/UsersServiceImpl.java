@@ -4,7 +4,7 @@ import by.bulaukin.news_portal.exception.EntityNotFoundException;
 import by.bulaukin.news_portal.model.User;
 import by.bulaukin.news_portal.repository.UserRepository;
 import by.bulaukin.news_portal.services.UsersService;
-import by.bulaukin.news_portal.web.model.filter.UsersFilter;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
@@ -21,7 +21,7 @@ public class UsersServiceImpl implements UsersService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> findAll(UsersFilter filter) {
+    public List<User> findAll(EntityFilter filter) {
         return userRepository.findAll(PageRequest.of(filter.getPageNum(), filter.getPageSize())).getContent();
     }
 

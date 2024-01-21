@@ -4,10 +4,7 @@ import by.bulaukin.news_portal.model.News;
 import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
 import by.bulaukin.news_portal.web.model.response.NewsListResponse;
 import by.bulaukin.news_portal.web.model.response.NewsResponse;
-import org.mapstruct.DecoratedWith;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -15,10 +12,14 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommentsMapper.class})
 public interface NewsMapper {
 
-    News requestToNews(UpsertNewsRequest request);
+    @Mapping(source = "userId", target = "user.id")
+    News requestToNews(Long userId, UpsertNewsRequest request);
 
-    @Mapping(source = "contentId", target = "id")
-    News requestToNews(Long contentId, UpsertNewsRequest request);
+    @Mappings({
+            @Mapping(source = "contentId", target = "id"),
+            @Mapping(source = "userId", target = "user.id")
+    })
+    News requestToNews(Long contentId, Long userId, UpsertNewsRequest request);
 
     NewsResponse newsToResponse(News news);
 

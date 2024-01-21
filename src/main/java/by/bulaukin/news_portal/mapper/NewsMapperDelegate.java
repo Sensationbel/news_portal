@@ -5,7 +5,7 @@ import by.bulaukin.news_portal.model.News;
 import by.bulaukin.news_portal.services.CategoriesService;
 import by.bulaukin.news_portal.services.CommentsService;
 import by.bulaukin.news_portal.services.UsersService;
-import by.bulaukin.news_portal.web.model.filter.CommentsFilter;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
 import by.bulaukin.news_portal.web.model.response.NewsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +21,19 @@ public abstract class NewsMapperDelegate implements NewsMapper{
     @Autowired
     private CommentsService commentsService;
 
-    @Autowired
-    private CommentsMapper commentsMapper;
-
 
     @Override
-    public News requestToNews(UpsertNewsRequest request) {
+    public News requestToNews(Long userId, UpsertNewsRequest request) {
         News news = new by.bulaukin.news_portal.model.News();
         news.setNewsText(request.getText());
-        news.setUser(userService.findById(request.getUserId()));
+        news.setUser(userService.findById(userId));
         news.setCategory(categoriesService.findCategoryByCode(request.getCodeNews()));
         return news;
     }
 
     @Override
-    public News requestToNews(Long newsId, UpsertNewsRequest request) {
-        News existedNews = requestToNews(request);
+    public News requestToNews(Long newsId,Long userId, UpsertNewsRequest request) {
+        News existedNews = requestToNews(userId, request);
         existedNews.setId(newsId);
         return existedNews;
     }
@@ -60,11 +57,8 @@ public abstract class NewsMapperDelegate implements NewsMapper{
     }
 
     private List<Comment> getComments(News news) {
-        CommentsFilter filter = new CommentsFilter();
+        EntityFilter filter = new EntityFilter();
         filter.setNewsId(news.getId());
-        List<Comment> comments = commentsService.findAllByNewsId(filter);
-        return comments;
+        return commentsService.findAllByNewsId(filter);
     }
-
-//    private List<CommentsResponse>
 }

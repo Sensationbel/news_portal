@@ -3,10 +3,11 @@ package by.bulaukin.news_portal.web.controller;
 import by.bulaukin.news_portal.mapper.NewsMapper;
 import by.bulaukin.news_portal.model.News;
 import by.bulaukin.news_portal.services.NewsService;
+import by.bulaukin.news_portal.services.users_check_aspect.users_aspect.UsersChecker;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 import by.bulaukin.news_portal.web.model.request.UpsertNewsRequest;
 import by.bulaukin.news_portal.web.model.response.NewsListResponse;
 import by.bulaukin.news_portal.web.model.response.NewsResponse;
-import by.bulaukin.news_portal.web.model.filter.NewsFilter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,8 @@ public class NewsController {
     private final NewsMapper newsMapper;
 
     @GetMapping
-    public ResponseEntity<NewsListResponse> findAll(@Valid NewsFilter filter) {
+    @UsersChecker
+    public ResponseEntity<NewsListResponse> findAll(@Valid EntityFilter filter) {
         return ResponseEntity.ok(newsMapper.newsListToNewsListResponse(newsService.findAllWithFilter(filter)));
     }
 
@@ -32,17 +34,17 @@ public class NewsController {
     }
 
     @PostMapping
-    public ResponseEntity<NewsResponse> create(@RequestBody @Valid UpsertNewsRequest request) {
-        by.bulaukin.news_portal.model.News news = newsService.save(newsMapper.requestToNews(request));
+    public ResponseEntity<NewsResponse> create(@RequestParam Long userId, @RequestBody @Valid UpsertNewsRequest request) {
+        News news = newsService.save(newsMapper.requestToNews(userId, request));
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 newsMapper.newsToResponse(news));
 
     }
 
     @PutMapping("/update")
-    public ResponseEntity<NewsResponse> update(@RequestParam Long contentId,
+    public ResponseEntity<NewsResponse> update(@RequestParam Long contentId, @RequestParam Long userId,
                                                @RequestBody @Valid UpsertNewsRequest request) {
-       News existingNews = newsService.update(newsMapper.requestToNews(contentId, request));
+       News existingNews = newsService.update(newsMapper.requestToNews(contentId, userId, request));
         return ResponseEntity.ok(
                 newsMapper.newsToResponse(existingNews));
     }

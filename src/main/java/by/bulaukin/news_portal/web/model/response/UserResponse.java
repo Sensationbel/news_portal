@@ -12,5 +12,4 @@ public class UserResponse {
     private String username;
     private String email;
     private List<NewsResponse> newsList = new ArrayList<>();
-    private List<CommentsResponse> comments = new ArrayList<>();
 }

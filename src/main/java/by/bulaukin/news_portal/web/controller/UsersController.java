@@ -3,10 +3,10 @@ package by.bulaukin.news_portal.web.controller;
 import by.bulaukin.news_portal.mapper.UsersMapper;
 import by.bulaukin.news_portal.model.User;
 import by.bulaukin.news_portal.services.UsersService;
+import by.bulaukin.news_portal.web.model.filter.EntityFilter;
 import by.bulaukin.news_portal.web.model.request.UpsertUserRequest;
 import by.bulaukin.news_portal.web.model.response.UserResponse;
 import by.bulaukin.news_portal.web.model.response.UsersListResponse;
-import by.bulaukin.news_portal.web.model.filter.UsersFilter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class UsersController {
     private final UsersMapper usersMapper;
 
     @GetMapping
-    public ResponseEntity<UsersListResponse> findAll(@Valid UsersFilter filter){
+    public ResponseEntity<UsersListResponse> findAll(@Valid EntityFilter filter){
         return ResponseEntity.ok(usersMapper.usersListToUsersListResponse(
                 usersService.findAll(filter)
         ));

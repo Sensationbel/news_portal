@@ -12,4 +12,7 @@ public class EntityFilter {
 
     private Integer pageSize;
     private Integer pageNum;
+    private Long userId;
+    private Long newsId;
+    private Character newsType;
 }
