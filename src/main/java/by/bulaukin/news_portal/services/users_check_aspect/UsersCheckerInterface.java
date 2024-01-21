@@ -1,5 +1,6 @@
 package by.bulaukin.news_portal.services.users_check_aspect;
 
+import by.bulaukin.news_portal.exception.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -15,7 +16,9 @@ public interface UsersCheckerInterface {
     }
 
     default Long getUserId(HttpServletRequest request) {
-        return Long.valueOf(request.getParameter("userId"));
+        String userId = request.getParameter("userId");
+
+        return userId != null ? Long.valueOf(userId) : null;
     }
 
     default Long getContentId(HttpServletRequest request) {

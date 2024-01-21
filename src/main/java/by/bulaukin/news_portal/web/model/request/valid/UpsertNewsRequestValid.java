@@ -14,7 +14,6 @@ public class UpsertNewsRequestValid implements ConstraintValidator<EntityFilterV
     @Override
     public boolean isValid(UpsertNewsRequest value, ConstraintValidatorContext context) {
         if (ObjectUtils.anyNull(value.getCodeNews())) {
-
             context.buildConstraintViolationWithTemplate("Code news must be not null!").addConstraintViolation();
         return false;
         }

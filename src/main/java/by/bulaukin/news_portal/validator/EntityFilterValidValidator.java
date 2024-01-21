@@ -20,7 +20,7 @@ public class EntityFilterValidValidator implements ConstraintValidator<EntityFil
 
         if (value.getNewsType() != null && isNewsType(value.getNewsType())) {
             context
-                    .buildConstraintViolationWithTemplate("The newsType parameter must be conform to specification")
+                    .buildConstraintViolationWithTemplate("The newsType parameter must be conform to specification!")
                     .addConstraintViolation();
             return false;
         }

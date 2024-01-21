@@ -26,12 +26,15 @@ public class UsersCheckerAspect implements UsersCheckerInterface {
 
         HttpServletRequest request = getHttpServletRequest();
         Long userId = getUserId(request);
-        User user = usersService.findById(userId);
+        if (userId != null) {
+            User user = usersService.findById(userId);
 
-        if (user == null) {
-            throw new EntityNotFoundException(MessageFormat.
-                    format("User with id: {0} can't change this content!", userId));
+            if (user == null) {
+                throw new EntityNotFoundException(MessageFormat.
+                        format("User with id: {0} can't change this content!", userId));
+            }
         }
+
 
         return point.proceed();
     }

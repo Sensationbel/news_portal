@@ -36,8 +36,9 @@ public class CommentsController {
     }
 
     @PostMapping
-    public ResponseEntity<CommentsResponse> create(@RequestBody @Valid UpsertCommentRequest request) {
-        Comment existsComment = commentsService.save(commentsMapper.requestToComment(request));
+    public ResponseEntity<CommentsResponse> create(@RequestParam Long userId,
+                                                   @RequestBody @Valid UpsertCommentRequest request) {
+        Comment existsComment = commentsService.save(commentsMapper.requestToComment(userId, request));
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 commentsMapper.commentToResponse(existsComment)
         );
@@ -45,8 +46,9 @@ public class CommentsController {
 
     @PutMapping("/update")
     public ResponseEntity<CommentsResponse> update(@RequestParam Long contentId,
+                                                   @RequestParam Long userId,
             @RequestBody @Valid UpsertCommentRequest request) {
-        Comment existsComment = commentsService.update(commentsMapper.requestToComment(contentId, request));
+        Comment existsComment = commentsService.update(commentsMapper.requestToComment(contentId, userId, request));
         return ResponseEntity.ok(
                 commentsMapper.commentToResponse(existsComment)
         );

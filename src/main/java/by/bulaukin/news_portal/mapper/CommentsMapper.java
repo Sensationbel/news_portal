@@ -4,10 +4,7 @@ import by.bulaukin.news_portal.model.Comment;
 import by.bulaukin.news_portal.web.model.response.CommentsListResponse;
 import by.bulaukin.news_portal.web.model.response.CommentsResponse;
 import by.bulaukin.news_portal.web.model.request.UpsertCommentRequest;
-import org.mapstruct.DecoratedWith;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -15,10 +12,14 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentsMapper {
 
-    Comment requestToComment(UpsertCommentRequest request);
+    @Mapping(source = "userId", target = "user.id")
+    Comment requestToComment(Long userId, UpsertCommentRequest request);
 
-    @Mapping(source = "contentId", target = "id")
-    Comment requestToComment(Long contentId, UpsertCommentRequest request);
+    @Mappings({
+            @Mapping(source = "contentId", target = "id"),
+            @Mapping(source = "userId", target = "user.id")
+    })
+    Comment requestToComment(Long contentId, Long userId, UpsertCommentRequest request);
 
     @Mapping(source = "text", target = "comment")
     CommentsResponse commentToResponse(Comment comment);

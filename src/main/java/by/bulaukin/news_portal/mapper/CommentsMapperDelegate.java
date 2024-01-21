@@ -14,9 +14,9 @@ public abstract class CommentsMapperDelegate implements CommentsMapper {
     private NewsService newsService;
 
     @Override
-    public Comment requestToComment(UpsertCommentRequest request) {
+    public Comment requestToComment(Long userId, UpsertCommentRequest request) {
         Comment comment = new Comment();
-        comment.setUser(usersService.findById(request.getUserId()));
+        comment.setUser(usersService.findById(userId));
         comment.setNews(newsService.findById(request.getNewsId()));
         comment.setText(request.getText());
 
@@ -24,8 +24,8 @@ public abstract class CommentsMapperDelegate implements CommentsMapper {
     }
 
     @Override
-    public Comment requestToComment(Long contentId, UpsertCommentRequest request) {
-        Comment existedComment = requestToComment(request);
+    public Comment requestToComment(Long contentId, Long userId, UpsertCommentRequest request) {
+        Comment existedComment = requestToComment(userId, request);
         existedComment.setId(contentId);
         return existedComment;
     }
