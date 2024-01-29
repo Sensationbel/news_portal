@@ -59,6 +59,6 @@ public abstract class NewsMapperDelegate implements NewsMapper{
     private List<Comment> getComments(News news) {
         EntityFilter filter = new EntityFilter();
         filter.setNewsId(news.getId());
-        return commentsService.findAllByNewsId(filter);
+        return commentsService.findAllByFilter(filter);
     }
 }

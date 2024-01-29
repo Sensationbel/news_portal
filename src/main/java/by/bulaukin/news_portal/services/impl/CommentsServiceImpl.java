@@ -27,7 +27,7 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<Comment> findAllByNewsId(EntityFilter filter) {
+    public List<Comment> findAllByFilter(EntityFilter filter) {
         return commentsRepository.findAll(CommentsSpecification.withFilter(filter));
     }
 

@@ -13,7 +13,14 @@ public class EntityFilterValidValidator implements ConstraintValidator<EntityFil
     public boolean isValid(EntityFilter value, ConstraintValidatorContext context) {
         if (ObjectUtils.anyNull(value.getPageNum(), value.getPageSize())) {
             context
-                    .buildConstraintViolationWithTemplate("Fields pagination mast be specify! If you specify minCost & maxCost than fields must be specify")
+                    .buildConstraintViolationWithTemplate("Fields pagination mast be specify!")
+                    .addConstraintViolation();
+            return false;
+        }
+
+        if (value.getPageSize()<=0) {
+            context
+                    .buildConstraintViolationWithTemplate("Page size must not be less than one!")
                     .addConstraintViolation();
             return false;
         }

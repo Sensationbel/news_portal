@@ -8,7 +8,7 @@ import java.util.List;
 public interface CommentsService {
 
     List<Comment> findAll();
-    List<Comment> findAllByNewsId(EntityFilter filter);
+    List<Comment> findAllByFilter(EntityFilter filter);
     Comment findById(Long id);
     Comment save(Comment comment);
     Comment update(Comment comment);

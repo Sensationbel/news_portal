@@ -14,7 +14,7 @@ public interface NewsSpecification {
 
     private static Specification<News> getByUserId(Long userId) {
         return (((root, query, criteriaBuilder) ->
-            userId == null ? null : criteriaBuilder.equal(root.get("user").get("id"), userId)
+                (userId == null || userId == 0) ? null : criteriaBuilder.equal(root.get("user").get("id"), userId)
         ));
     }
 
